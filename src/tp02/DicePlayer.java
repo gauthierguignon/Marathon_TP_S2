@@ -34,11 +34,21 @@ public class DicePlayer {
         this.nbDiceRolls++;
     }
 
-    void playUntil(Dice aDice, int objective) {
+    public void playUntil(Dice aDice, int objective) {
         do {
             this.play(aDice);
         } while(this.totalValue < objective);
     }
 
+    public boolean isWinner(DicePlayer other) {
+        if(this.nbDiceRolls != other.nbDiceRolls) {
+            return this.nbDiceRolls > other.nbDiceRolls;
+        } 
+        return this.totalValue > other.totalValue;
+    }
+
+    public int compareNbDiceRolls(DicePlayer other) {
+        return other.nbDiceRolls -this.nbDiceRolls;
+    }
 
 }
