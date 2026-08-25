@@ -1,4 +1,6 @@
+package tp04_supp;
 
+import tpOO.tp04.PendingCase;
 
 public class UsePendingCaseQueue {
     public static void main(String[] args) {
@@ -23,6 +25,10 @@ public class UsePendingCaseQueue {
         System.out.println("After a removal: " + pcq);
         pcq.addOne(pc1);
         System.out.println("After addition of pc1: " + pcq);
+        pcq.removeOne();
+        System.out.println("After a removal " + pcq);
+        pcq.cheating(pc2, 1);
+        System.out.println("After cheating: " + pcq);
         pcq.clear();
         System.out.println("After clearing: " + pcq);
     }
