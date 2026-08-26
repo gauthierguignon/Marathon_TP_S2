@@ -1,4 +1,7 @@
-package tpOO.tp05;
+package tp05_supp;
+
+// javac -d bin -cp "bin:/usr/share/java/junit-platform-console-standalone.jar" test/tp05_supp/ShopTest.java 
+// java -jar /usr/share/java/junit-platform-console-standalone.jar execute -cp bin -c tp05_supp.ShopTest
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -7,6 +10,8 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import tp05_supp.Article;
 
 public class ShopTest {
     private String ref1, ref2, ref3, ref4;
