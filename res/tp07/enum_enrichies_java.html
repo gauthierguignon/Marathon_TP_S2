@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enum Enrichies — Java</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14;
+    --surface: #141720;
+    --surface2: #1c2030;
+    --border: #252a3a;
+    --accent: #f97316;
+    --accent2: #fb923c;
+    --blue: #60a5fa;
+    --green: #4ade80;
+    --purple: #c084fc;
+    --yellow: #fbbf24;
+    --red: #f87171;
+    --text: #e2e8f0;
+    --muted: #64748b;
+    --code-bg: #0a0c10;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    line-height: 1.6;
+    padding: 40px 20px 80px;
+  }
+
+  .page {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  /* HEADER */
+  header {
+    border-left: 4px solid var(--accent);
+    padding-left: 20px;
+    margin-bottom: 48px;
+    animation: fadeIn 0.5s ease;
+  }
+
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  h1 {
+    font-size: 2.6rem;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.1;
+  }
+
+  h1 span { color: var(--accent); }
+
+  .subtitle {
+    margin-top: 8px;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+
+  /* SECTIONS */
+  .section {
+    margin-bottom: 36px;
+    animation: fadeIn 0.5s ease;
+  }
+
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+    margin-bottom: 14px;
+  }
+
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  h2 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 10px;
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 14px;
+    transition: border-color 0.2s;
+  }
+
+  .card:hover { border-color: var(--accent); }
+
+  .card h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--blue);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card p, .card li {
+    font-size: 0.9rem;
+    color: #a0aec0;
+    line-height: 1.7;
+  }
+
+  .card ul { padding-left: 18px; }
+  .card li { margin-bottom: 2px; }
+
+  /* GRID */
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 640px) { .grid { grid-template-columns: 1fr; } }
+
+  /* CODE BLOCKS */
+  .code-block {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 14px;
+  }
+
+  .code-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 14px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .code-lang {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .code-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+  }
+
+  pre {
+    padding: 18px;
+    overflow-x: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    line-height: 1.75;
+    tab-size: 4;
+  }
+
+  /* SYNTAX HIGHLIGHTING */
+  .kw  { color: var(--purple); font-weight: 600; }
+  .cl  { color: var(--yellow); }
+  .fn  { color: var(--blue); }
+  .st  { color: var(--green); }
+  .cm  { color: var(--muted); font-style: italic; }
+  .nm  { color: var(--accent2); }
+  .tp  { color: #7dd3fc; }
+
+  /* PILLS */
+  .pill {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    font-family: 'JetBrains Mono', monospace;
+    margin: 2px;
+  }
+
+  .pill-orange { background: #431407; color: var(--accent2); border: 1px solid #7c2d12; }
+  .pill-blue   { background: #172554; color: var(--blue); border: 1px solid #1e3a8a; }
+  .pill-green  { background: #052e16; color: var(--green); border: 1px solid #14532d; }
+  .pill-purple { background: #2e1065; color: var(--purple); border: 1px solid #4c1d95; }
+
+  /* RULE TABLE */
+  .rule-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+    margin-bottom: 14px;
+  }
+
+  .rule-table th {
+    text-align: left;
+    padding: 10px 14px;
+    background: var(--surface2);
+    color: var(--muted);
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .rule-table td {
+    padding: 10px 14px;
+    border-top: 1px solid var(--border);
+    color: #a0aec0;
+    vertical-align: top;
+  }
+
+  .rule-table td:first-child {
+    color: var(--blue);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    white-space: nowrap;
+  }
+
+  .rule-table tr:hover td { background: var(--surface); }
+
+  /* ALERT */
+  .alert {
+    border-left: 3px solid var(--yellow);
+    background: #1a1500;
+    padding: 12px 16px;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.875rem;
+    color: #fef3c7;
+    margin-bottom: 14px;
+  }
+
+  .alert strong { color: var(--yellow); }
+
+  .tip {
+    border-left: 3px solid var(--green);
+    background: #071a0f;
+    padding: 12px 16px;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.875rem;
+    color: #d1fae5;
+    margin-bottom: 14px;
+  }
+
+  .tip strong { color: var(--green); }
+
+  /* COMPARAISON */
+  .cmp-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  @media (max-width: 640px) { .cmp-row { grid-template-columns: 1fr; } }
+
+  .cmp-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .cmp-header {
+    padding: 8px 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .cmp-header.bad  { background: #1a0505; color: var(--red); border-bottom: 1px solid #450a0a; }
+  .cmp-header.good { background: #052e16; color: var(--green); border-bottom: 1px solid #14532d; }
+
+  .cmp-block pre { padding: 14px; font-size: 0.78rem; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <header>
+    <div class="tag">☕ Java — Fiche de révision</div>
+    <h1>Enum <span>Enrichies</span></h1>
+    <p class="subtitle">Champs, constructeurs, méthodes, interfaces, patterns avancés</p>
+  </header>
+
+  <!-- 1. RAPPEL ENUM SIMPLE -->
+  <div class="section">
+    <div class="section-title">01 — Rappel enum de base</div>
+    <div class="card">
+      <h3>📌 Qu'est-ce qu'un enum ?</h3>
+      <p>Un <code style="color:var(--purple)">enum</code> est un type spécial dont les valeurs possibles sont des <strong>constantes nommées et prédéfinies</strong>. En Java, c'est implicitement une sous-classe de <code style="color:var(--yellow)">java.lang.Enum</code>.</p>
+    </div>
+
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-lang">java</span>
+        <span class="code-label">enum basique</span>
+      </div>
+      <pre><span class="kw">public enum</span> <span class="cl">Jour</span> {
+    LUNDI, MARDI, MERCREDI, JEUDI, VENDREDI, SAMEDI, DIMANCHE;
+}
+
+<span class="cm">// Utilisation</span>
+<span class="cl">Jour</span> j = <span class="cl">Jour</span>.<span class="nm">LUNDI</span>;
+<span class="tp">System</span>.out.<span class="fn">println</span>(j.<span class="fn">name</span>());    <span class="cm">// "LUNDI"</span>
+<span class="tp">System</span>.out.<span class="fn">println</span>(j.<span class="fn">ordinal</span>()); <span class="cm">// 0</span>
+<span class="cl">Jour</span>[] jours = <span class="cl">Jour</span>.<span class="fn">values</span>();      <span class="cm">// tous les membres</span>
+<span class="cl">Jour</span> k = <span class="cl">Jour</span>.<span class="fn">valueOf</span>(<span class="st">"MARDI"</span>);  <span class="cm">// Jour.MARDI</span></pre>
+    </div>
+  </div>
+
+  <!-- 2. ENUM ENRICHI : CHAMPS + CONSTRUCTEUR -->
+  <div class="section">
+    <div class="section-title">02 — Champs et constructeur</div>
+    <div class="card">
+      <h3>⚙️ Principe</h3>
+      <p>On peut ajouter des <strong>champs</strong> à un enum. Chaque constante appelle alors le <strong>constructeur</strong> (toujours <span class="pill pill-orange">private</span>) en passant ses valeurs entre parenthèses.</p>
+    </div>
+
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-lang">java</span>
+        <span class="code-label">Planète avec masse et rayon</span>
+      </div>
+      <pre><span class="kw">public enum</span> <span class="cl">Planete</span> {
+    MERCURE(<span class="nm">3.303e+23</span>, <span class="nm">2.4397e6</span>),
+    VENUS  (<span class="nm">4.869e+24</span>, <span class="nm">6.0518e6</span>),
+    TERRE  (<span class="nm">5.976e+24</span>, <span class="nm">6.37814e6</span>),
+    MARS   (<span class="nm">6.421e+23</span>, <span class="nm">3.3972e6</span>);
+
+    <span class="kw">private final double</span> <span class="nm">masse</span>;   <span class="cm">// en kg</span>
+    <span class="kw">private final double</span> <span class="nm">rayon</span>;  <span class="cm">// en m</span>
+
+    <span class="cm">// Constructeur OBLIGATOIREMENT private</span>
+    <span class="cl">Planete</span>(<span class="kw">double</span> masse, <span class="kw">double</span> rayon) {
+        <span class="kw">this</span>.<span class="nm">masse</span>  = masse;
+        <span class="kw">this</span>.<span class="nm">rayon</span>  = rayon;
+    }
+
+    <span class="kw">public double</span> <span class="fn">getMasse</span>()  { <span class="kw">return</span> <span class="nm">masse</span>; }
+    <span class="kw">public double</span> <span class="fn">getRayon</span>()  { <span class="kw">return</span> <span class="nm">rayon</span>; }
+
+    <span class="kw">static final double</span> <span class="nm">G</span> = <span class="nm">6.67300E-11</span>;
+
+    <span class="kw">public double</span> <span class="fn">gravite</span>() {
+        <span class="kw">return</span> <span class="nm">G</span> * <span class="nm">masse</span> / (<span class="nm">rayon</span> * <span class="nm">rayon</span>);
+    }
+}
+
+<span class="cm">// Utilisation</span>
+<span class="tp">System</span>.out.<span class="fn">println</span>(<span class="cl">Planete</span>.<span class="nm">MARS</span>.<span class="fn">gravite</span>()); <span class="cm">// 3.71 m/s²</span></pre>
+    </div>
+
+    <div class="alert">
+      <strong>⚠ Règle :</strong> Le constructeur d'un enum est toujours <code>private</code> (ou package-private implicitement). Il est <strong>interdit</strong> de le déclarer <code>public</code> ou <code>protected</code>.
+    </div>
+  </div>
+
+  <!-- 3. METHODES ABSTRAITES / PAR CONSTANTE -->
+  <div class="section">
+    <div class="section-title">03 — Méthode abstraite par constante</div>
+    <div class="card">
+      <h3>🔀 Corps de méthode spécifique à chaque constante</h3>
+      <p>On peut déclarer une méthode <span class="pill pill-orange">abstract</span> dans l'enum et la <strong>redéfinir pour chaque constante</strong>. Chaque constante devient ainsi une classe anonyme interne.</p>
+    </div>
+
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-lang">java</span>
+        <span class="code-label">Opération arithmétique</span>
+      </div>
+      <pre><span class="kw">public enum</span> <span class="cl">Operation</span> {
+    PLUS(<span class="st">"+"</span>) {
+        <span class="kw">public double</span> <span class="fn">appliquer</span>(<span class="kw">double</span> x, <span class="kw">double</span> y) { <span class="kw">return</span> x + y; }
+    },
+    MOINS(<span class="st">"-"</span>) {
+        <span class="kw">public double</span> <span class="fn">appliquer</span>(<span class="kw">double</span> x, <span class="kw">double</span> y) { <span class="kw">return</span> x - y; }
+    },
+    FOIS(<span class="st">"*"</span>) {
+        <span class="kw">public double</span> <span class="fn">appliquer</span>(<span class="kw">double</span> x, <span class="kw">double</span> y) { <span class="kw">return</span> x * y; }
+    },
+    DIVISE(<span class="st">"/"</span>) {
+        <span class="kw">public double</span> <span class="fn">appliquer</span>(<span class="kw">double</span> x, <span class="kw">double</span> y) { <span class="kw">return</span> x / y; }
+    };
+
+    <span class="kw">private final</span> <span class="tp">String</span> <span class="nm">symbole</span>;
+
+    <span class="cl">Operation</span>(<span class="tp">String</span> symbole) { <span class="kw">this</span>.<span class="nm">symbole</span> = symbole; }
+
+    <span class="kw">public abstract double</span> <span class="fn">appliquer</span>(<span class="kw">double</span> x, <span class="kw">double</span> y);
+
+    <span class="kw">public</span> <span class="tp">String</span> <span class="fn">toString</span>() { <span class="kw">return</span> <span class="nm">symbole</span>; }
+}
+
+<span class="cm">// Utilisation</span>
+<span class="kw">for</span> (<span class="cl">Operation</span> op : <span class="cl">Operation</span>.<span class="fn">values</span>())
+    <span class="tp">System</span>.out.<span class="fn">printf</span>(<span class="st">"5 %s 3 = %.1f%n"</span>, op, op.<span class="fn">appliquer</span>(<span class="nm">5</span>, <span class="nm">3</span>));</pre>
+    </div>
+  </div>
+
+  <!-- 4. INTERFACE -->
+  <div class="section">
+    <div class="section-title">04 — Implémenter une interface</div>
+    <div class="card">
+      <h3>🔌 Un enum peut implémenter des interfaces</h3>
+      <p>C'est utile pour utiliser l'enum de façon polymorphique. L'enum ne peut pas <code>extends</code> une classe (il hérite déjà de <code>Enum</code>), mais il peut <code>implements</code> plusieurs interfaces.</p>
+    </div>
+
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-lang">java</span>
+        <span class="code-label">Enum + interface</span>
+      </div>
+      <pre><span class="kw">public interface</span> <span class="cl">Affichable</span> {
+    <span class="tp">String</span> <span class="fn">afficher</span>();
+}
+
+<span class="kw">public enum</span> <span class="cl">Couleur</span> <span class="kw">implements</span> <span class="cl">Affichable</span> {
+    ROUGE(<span class="st">"#FF0000"</span>),
+    VERT (<span class="st">"#00FF00"</span>),
+    BLEU (<span class="st">"#0000FF"</span>);
+
+    <span class="kw">private final</span> <span class="tp">String</span> <span class="nm">hex</span>;
+
+    <span class="cl">Couleur</span>(<span class="tp">String</span> hex) { <span class="kw">this</span>.<span class="nm">hex</span> = hex; }
+
+    <span class="nd">@Override</span>
+    <span class="kw">public</span> <span class="tp">String</span> <span class="fn">afficher</span>() {
+        <span class="kw">return</span> <span class="fn">name</span>() + <span class="st">" → "</span> + <span class="nm">hex</span>;
+    }
+}
+
+<span class="cm">// Polymorphisme possible</span>
+<span class="cl">Affichable</span> a = <span class="cl">Couleur</span>.<span class="nm">ROUGE</span>;
+<span class="tp">System</span>.out.<span class="fn">println</span>(a.<span class="fn">afficher</span>()); <span class="cm">// ROUGE → #FF0000</span></pre>
+    </div>
+  </div>
+
+  <!-- 5. EnumMap / EnumSet -->
+  <div class="section">
+    <div class="section-title">05 — EnumMap &amp; EnumSet</div>
+    <div class="grid">
+      <div class="card">
+        <h3>🗺 EnumMap</h3>
+        <ul>
+          <li>Map spécialisée avec des clés de type enum</li>
+          <li>Plus <strong>performante</strong> que <code>HashMap</code></li>
+          <li>Itération dans l'ordre de déclaration</li>
+        </ul>
+        <div style="margin-top:12px; background:var(--code-bg); border-radius:6px; padding:12px;">
+<pre style="padding:0; font-size:0.78rem;"><span class="cl">EnumMap</span>&lt;<span class="cl">Jour</span>, <span class="tp">String</span>&gt; agenda
+    = <span class="kw">new</span> <span class="cl">EnumMap</span>&lt;&gt;(<span class="cl">Jour</span>.<span class="kw">class</span>);
+agenda.<span class="fn">put</span>(<span class="cl">Jour</span>.<span class="nm">LUNDI</span>, <span class="st">"Réunion"</span>);</pre>
+        </div>
+      </div>
+      <div class="card">
+        <h3>🧩 EnumSet</h3>
+        <ul>
+          <li>Set ultra-rapide stocké en bitmap</li>
+          <li>Seuls les éléments d'un même enum</li>
+          <li>Factory methods : <code>of()</code>, <code>allOf()</code>, <code>range()</code></li>
+        </ul>
+        <div style="margin-top:12px; background:var(--code-bg); border-radius:6px; padding:12px;">
+<pre style="padding:0; font-size:0.78rem;"><span class="cl">EnumSet</span>&lt;<span class="cl">Jour</span>&gt; weekend =
+    <span class="cl">EnumSet</span>.<span class="fn">of</span>(<span class="cl">Jour</span>.<span class="nm">SAMEDI</span>, <span class="cl">Jour</span>.<span class="nm">DIMANCHE</span>);
+
+<span class="cl">EnumSet</span>&lt;<span class="cl">Jour</span>&gt; semaine =
+    <span class="cl">EnumSet</span>.<span class="fn">range</span>(<span class="cl">Jour</span>.<span class="nm">LUNDI</span>, <span class="cl">Jour</span>.<span class="nm">VENDREDI</span>);</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. METHODS UTILES -->
+  <div class="section">
+    <div class="section-title">06 — Méthodes utiles héritées</div>
+    <table class="rule-table">
+      <tr>
+        <th>Méthode</th>
+        <th>Type retour</th>
+        <th>Description</th>
+      </tr>
+      <tr>
+        <td>name()</td>
+        <td><span class="pill pill-blue">String</span></td>
+        <td>Nom exact de la constante (identique à <code>toString()</code> par défaut)</td>
+      </tr>
+      <tr>
+        <td>ordinal()</td>
+        <td><span class="pill pill-blue">int</span></td>
+        <td>Position dans la déclaration (commence à 0) — à éviter pour la logique métier</td>
+      </tr>
+      <tr>
+        <td>values()</td>
+        <td><span class="pill pill-blue">T[]</span></td>
+        <td>Tableau de toutes les constantes dans l'ordre de déclaration</td>
+      </tr>
+      <tr>
+        <td>valueOf(String)</td>
+        <td><span class="pill pill-blue">T</span></td>
+        <td>Retourne la constante dont le nom correspond (lève <code>IllegalArgumentException</code> si introuvable)</td>
+      </tr>
+      <tr>
+        <td>compareTo(T)</td>
+        <td><span class="pill pill-blue">int</span></td>
+        <td>Compare par ordinal</td>
+      </tr>
+      <tr>
+        <td>getDeclaringClass()</td>
+        <td><span class="pill pill-blue">Class&lt;E&gt;</span></td>
+        <td>Retourne la classe de l'enum (utile avec les méthodes abstraites)</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- 7. PATTERN STRATEGY avec enum -->
+  <div class="section">
+    <div class="section-title">07 — Pattern Strategy avec enum</div>
+    <div class="card">
+      <h3>💡 Enum comme strategy embarquée</h3>
+      <p>Plutôt qu'une hiérarchie de classes, on peut regrouper toutes les variantes dans un seul enum avec une méthode abstraite. Plus compact, toujours type-safe.</p>
+    </div>
+
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-lang">java</span>
+        <span class="code-label">Strategy — calcul de remise</span>
+      </div>
+      <pre><span class="kw">public enum</span> <span class="cl">TypeClient</span> {
+    STANDARD {
+        <span class="kw">public double</span> <span class="fn">remise</span>(<span class="kw">double</span> prix) { <span class="kw">return</span> prix; }
+    },
+    PREMIUM {
+        <span class="kw">public double</span> <span class="fn">remise</span>(<span class="kw">double</span> prix) { <span class="kw">return</span> prix * <span class="nm">0.9</span>; }
+    },
+    VIP {
+        <span class="kw">public double</span> <span class="fn">remise</span>(<span class="kw">double</span> prix) { <span class="kw">return</span> prix * <span class="nm">0.75</span>; }
+    };
+
+    <span class="kw">public abstract double</span> <span class="fn">remise</span>(<span class="kw">double</span> prix);
+}
+
+<span class="cm">// Utilisation</span>
+<span class="cl">TypeClient</span> tc = <span class="cl">TypeClient</span>.<span class="nm">VIP</span>;
+<span class="tp">System</span>.out.<span class="fn">printf</span>(<span class="st">"Prix final : %.2f€%n"</span>, tc.<span class="fn">remise</span>(<span class="nm">100.0</span>));
+<span class="cm">// Prix final : 75.00€</span></pre>
+    </div>
+  </div>
+
+  <!-- 8. SINGLETON via enum -->
+  <div class="section">
+    <div class="section-title">08 — Singleton via enum</div>
+    <div class="card">
+      <h3>🔒 L'enum est le seul singleton vraiment thread-safe</h3>
+      <p>Joshua Bloch (Effective Java) recommande l'enum pour implémenter un Singleton : la JVM garantit qu'une seule instance existe, même en cas de désérialisation ou de réflexion.</p>
+    </div>
+
+    <div class="cmp-row">
+      <div class="cmp-block">
+        <div class="cmp-header bad">❌ Singleton classique (fragile)</div>
+        <pre><span class="kw">public class</span> <span class="cl">Config</span> {
+  <span class="kw">private static</span> <span class="cl">Config</span> <span class="nm">instance</span>;
+  <span class="kw">private</span> <span class="cl">Config</span>() {}
+  <span class="kw">public static</span> <span class="cl">Config</span> <span class="fn">get</span>() {
+    <span class="kw">if</span> (<span class="nm">instance</span> == <span class="kw">null</span>)
+      <span class="nm">instance</span> = <span class="kw">new</span> <span class="cl">Config</span>();
+    <span class="kw">return</span> <span class="nm">instance</span>;
+  }
+}</pre>
+      </div>
+      <div class="cmp-block">
+        <div class="cmp-header good">✅ Singleton enum (robuste)</div>
+        <pre><span class="kw">public enum</span> <span class="cl">Config</span> {
+  <span class="nm">INSTANCE</span>;
+
+  <span class="kw">private</span> <span class="tp">String</span> <span class="nm">host</span> = <span class="st">"localhost"</span>;
+
+  <span class="kw">public</span> <span class="tp">String</span> <span class="fn">getHost</span>() {
+    <span class="kw">return</span> <span class="nm">host</span>;
+  }
+}
+
+<span class="cm">// Config.INSTANCE.getHost()</span></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. REGLES ET PIEGES -->
+  <div class="section">
+    <div class="section-title">09 — Règles &amp; pièges à éviter</div>
+    <div class="grid">
+      <div class="card">
+        <h3>✅ À faire</h3>
+        <ul>
+          <li>Toujours déclarer les champs <code>final</code></li>
+          <li>Préférer <code>EnumMap</code> / <code>EnumSet</code> aux collections génériques</li>
+          <li>Surcharger <code>toString()</code> pour l'affichage métier</li>
+          <li>Utiliser <code>switch</code> sur les enums (exhaustif)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>❌ À éviter</h3>
+        <ul>
+          <li>Utiliser <code>ordinal()</code> pour la logique métier (fragile)</li>
+          <li>Modifier un champ non-<code>final</code> (anti-pattern)</li>
+          <li>Créer des enums avec trop de responsabilités</li>
+          <li>Oublier le constructeur <code>private</code></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip">
+      <strong>💡 Astuce :</strong> Pour retrouver une constante depuis une valeur métier (ex. un code), ajoutez une méthode <code>static fromCode(int code)</code> avec une <code>Map</code> statique pour éviter de parcourir <code>values()</code> à chaque appel.
+    </div>
+
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-lang">java</span>
+        <span class="code-label">Recherche optimisée par code</span>
+      </div>
+      <pre><span class="kw">public enum</span> <span class="cl">CodeErreur</span> {
+    OK(<span class="nm">200</span>), NOT_FOUND(<span class="nm">404</span>), SERVER_ERROR(<span class="nm">500</span>);
+
+    <span class="kw">private final int</span> <span class="nm">code</span>;
+
+    <span class="cl">CodeErreur</span>(<span class="kw">int</span> code) { <span class="kw">this</span>.<span class="nm">code</span> = code; }
+
+    <span class="kw">private static final</span> <span class="cl">Map</span>&lt;<span class="tp">Integer</span>, <span class="cl">CodeErreur</span>&gt; <span class="nm">MAP</span> =
+        <span class="tp">Arrays</span>.<span class="fn">stream</span>(<span class="fn">values</span>())
+              .<span class="fn">collect</span>(<span class="cl">Collectors</span>.<span class="fn">toMap</span>(e -&gt; e.<span class="nm">code</span>, e -&gt; e));
+
+    <span class="kw">public static</span> <span class="cl">CodeErreur</span> <span class="fn">fromCode</span>(<span class="kw">int</span> code) {
+        <span class="kw">return</span> <span class="nm">MAP</span>.<span class="fn">getOrDefault</span>(code, <span class="nm">SERVER_ERROR</span>);
+    }
+}
+
+<span class="cm">// CodeErreur.fromCode(404) → NOT_FOUND</span></pre>
+    </div>
+  </div>
+
+  <!-- 10. RECAPITULATIF -->
+  <div class="section">
+    <div class="section-title">10 — Récapitulatif visuel</div>
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-lang">java</span>
+        <span class="code-label">Structure complète d'un enum enrichi</span>
+      </div>
+      <pre><span class="kw">public enum</span> <span class="cl">MonEnum</span> <span class="kw">implements</span> <span class="cl">UneInterface</span> {
+
+    <span class="cm">// 1. Constantes avec arguments du constructeur</span>
+    <span class="nm">CONSTANTE_A</span>(arg1, arg2) {
+        <span class="kw">public</span> <span class="tp">String</span> <span class="fn">methodeAbstraite</span>() { <span class="kw">return</span> <span class="st">"A"</span>; }
+    },
+    <span class="nm">CONSTANTE_B</span>(arg1, arg2) {
+        <span class="kw">public</span> <span class="tp">String</span> <span class="fn">methodeAbstraite</span>() { <span class="kw">return</span> <span class="st">"B"</span>; }
+    };
+
+    <span class="cm">// 2. Champs (toujours final de préférence)</span>
+    <span class="kw">private final</span> <span class="tp">Type1</span> <span class="nm">champ1</span>;
+    <span class="kw">private final</span> <span class="tp">Type2</span> <span class="nm">champ2</span>;
+
+    <span class="cm">// 3. Constructeur private</span>
+    <span class="cl">MonEnum</span>(<span class="tp">Type1</span> c1, <span class="tp">Type2</span> c2) {
+        <span class="kw">this</span>.<span class="nm">champ1</span> = c1;
+        <span class="kw">this</span>.<span class="nm">champ2</span> = c2;
+    }
+
+    <span class="cm">// 4. Méthodes concrètes partagées</span>
+    <span class="kw">public</span> <span class="tp">Type1</span> <span class="fn">getChamp1</span>() { <span class="kw">return</span> <span class="nm">champ1</span>; }
+
+    <span class="cm">// 5. Méthode abstraite (implémentée par chaque constante)</span>
+    <span class="kw">public abstract</span> <span class="tp">String</span> <span class="fn">methodeAbstraite</span>();
+
+    <span class="cm">// 6. Méthode statique utilitaire</span>
+    <span class="kw">public static</span> <span class="cl">MonEnum</span> <span class="fn">fromChamp1</span>(<span class="tp">Type1</span> v) { ... }
+
+    <span class="cm">// 7. toString optionnel</span>
+    <span class="nd">@Override</span>
+    <span class="kw">public</span> <span class="tp">String</span> <span class="fn">toString</span>() { <span class="kw">return</span> <span class="nm">champ1</span>.<span class="fn">toString</span>(); }
+}</pre>
+    </div>
+
+    <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:4px;">
+      <span class="pill pill-orange">private constructor</span>
+      <span class="pill pill-blue">final fields</span>
+      <span class="pill pill-green">abstract methods</span>
+      <span class="pill pill-purple">implements interface</span>
+      <span class="pill pill-orange">static utility methods</span>
+      <span class="pill pill-blue">EnumMap / EnumSet</span>
+      <span class="pill pill-green">Singleton pattern</span>
+      <span class="pill pill-purple">Strategy pattern</span>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
