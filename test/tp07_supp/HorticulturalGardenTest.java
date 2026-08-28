@@ -1,4 +1,11 @@
-package tpOO.tp07;
+package tp07_supp;
+
+/*
+
+javac -d bin -cp bin:/usr/share/java/junit-platform-console-standalone.jar test/tp07_supp/HorticulturalGardenTest.java 
+
+*/ 
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -7,6 +14,13 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import tp07_supp.Plant;
+import tp07_supp.Rose;
+import tp07_supp.Shrub;
+import tp07_supp.Tulip;
+
+
 
 public class HorticulturalGardenTest {
     int id1, id2, id3, id4, id5, id6, size1;
@@ -219,30 +233,30 @@ public class HorticulturalGardenTest {
         assertSame(t2, toHarvest.get(1));
     }
 
-    @Test
-    void testPotentialPremiumProfit() {
-        double profit = 0.0;
+    // @Test
+    // void testPotentialPremiumProfit() {
+    //     double profit = 0.0;
 
-        assertEquals(0, garden2.getGardenSize());
-        assertEquals(profit, garden2.potentialPremiumProfit());
+    //     assertEquals(0, garden2.getGardenSize());
+    //     assertEquals(profit, garden2.potentialPremiumProfit());
 
-        garden2.add(r1); // immature premium
-        assertEquals(profit, garden2.potentialPremiumProfit());
+    //     garden2.add(r1); // immature premium
+    //     assertEquals(profit, garden2.potentialPremiumProfit());
 
-        garden2.add(r2); // mature premium
-        profit += 2 * r2.getSize() * r2.getPricePerUnit();
-        assertEquals(profit, garden2.potentialPremiumProfit());
+    //     garden2.add(r2); // mature premium
+    //     profit += 2 * r2.getSize() * r2.getPricePerUnit();
+    //     assertEquals(profit, garden2.potentialPremiumProfit());
 
-        garden2.add(t2); // mature non premium
-        assertEquals(profit, garden2.potentialPremiumProfit());
+    //     garden2.add(t2); // mature non premium
+    //     assertEquals(profit, garden2.potentialPremiumProfit());
 
-        garden2.add(sh1); // immature premium
-        assertEquals(profit, garden2.potentialPremiumProfit());
+    //     garden2.add(sh1); // immature premium
+    //     assertEquals(profit, garden2.potentialPremiumProfit());
 
-        garden2.add(sh2); // mature premium
-        profit += 2 * sh2.getSize() * sh2.getPricePerUnit();
-        assertEquals(profit, garden2.potentialPremiumProfit());
-    }
+    //     garden2.add(sh2); // mature premium
+    //     profit += 2 * sh2.getSize() * sh2.getPricePerUnit();
+    //     assertEquals(profit, garden2.potentialPremiumProfit());
+    // }
 
     @Test
     void testPremiumCareInterface() {

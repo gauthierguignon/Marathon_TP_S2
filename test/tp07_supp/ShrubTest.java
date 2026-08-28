@@ -1,4 +1,4 @@
-package tpOO.tp07;
+package tp07_supp;
 
 import static org.junit.jupiter.api.Assertions.*;
 

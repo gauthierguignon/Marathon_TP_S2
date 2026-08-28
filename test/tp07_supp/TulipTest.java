@@ -1,4 +1,10 @@
-package tpOO.tp07;
+package tp07_supp;
+
+/*
+javac -d bin -cp bin src/tp07_supp/*.java
+javac -d bin -cp bin:/usr/share/java/junit-platform-console-standalone.jar test/tp07_supp/TulipTest.java
+java -jar /usr/share/java/junit-platform-console-standalone.jar execute -cp bin -c tp07_supp.TulipTest
+*/
 
 import static org.junit.jupiter.api.Assertions.*;
 
