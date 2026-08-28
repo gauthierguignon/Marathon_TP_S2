@@ -11,6 +11,7 @@ public class Shelf {
     public Shelf(boolean refrigerated, int capacityMax) {
         this.refrigerated = refrigerated;
         this.capacityMax = capacityMax;
+        this.products = new ArrayList<>();
     }
 
     public ArrayList<IProduct> getProducts() {
