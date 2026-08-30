@@ -21,9 +21,8 @@ public class Exercice {
       System.out.println("Opération terminée");
     }
     
-    
-    
-    
   }
   
 }
+
+// On peut lire l'entrée standard, mais il faut bien utiliser sc.nextString() car sc.nextInt() produirait une erreur si le user rentre un mot. 

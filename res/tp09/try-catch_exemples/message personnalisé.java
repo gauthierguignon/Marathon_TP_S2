@@ -18,6 +18,6 @@ public class Exercice {
 }
 
 
-// on est pas obligé de l'expliciter car c'est une erreur Uncheked 
+// on est pas obligé de l'expliciter car c'est une erreur Unchecked 
 //(checkec au runtime pas à la compile)
 // si on ne spécifie pas le type d'erreur, ça aurait lancé une ArithmeticException

@@ -1,4 +1,4 @@
-﻿abstract	Mot-clé	Déclaration d'une méthode ou d'une classe abstraite.
+﻿abstract    Mot-clé	Déclaration d'une méthode ou d'une classe abstraite.
 assert	Mot-clé	Assertion
 break	Mot-clé	Interrompre une boucle ou un choix multiple.
 case	Mot-clé	Cas dans un choix multiple.
