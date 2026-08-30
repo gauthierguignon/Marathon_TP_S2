@@ -47,7 +47,6 @@ public class Food implements IProduct, Comparable<Food> {
         return bestBeforeDate.isBefore(date) || bestBeforeDate.isEqual(date);
     }
 
-
     public int compareTo(Food f) {
         if(this.isBestBefore(f.getBestBeforeDate())) return 1;
         return -1;

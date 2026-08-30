@@ -1,4 +1,11 @@
-package tpOO.tp08;
+package tp08_supp;
+
+/*
+javac -d bin -cp bin src/tp08_supp/*.java
+javac -d bin -cp bin:/usr/share/java/junit-platform-console-standalone.jar test/tp08_supp/BreedingGroundTest.java
+java -jar /usr/share/java/junit-platform-console-standalone.jar execute -cp bin -c tp08_supp.BreedingGroundTest
+*/
+
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
